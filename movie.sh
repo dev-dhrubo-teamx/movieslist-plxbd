@@ -1,26 +1,20 @@
 #!/bin/bash
 
-# ===== CONFIG =====
+LINK_FILE_URL="https://raw.githubusercontent.com/dev-dhrubo-teamx/movieslist-plxbd/main/movie_links.txt"
 DOWNLOAD_DIR="$HOME/movies"
-LINK_FILE="$HOME/movie_links.txt"
-
-# ==================
 
 mkdir -p "$DOWNLOAD_DIR"
 cd "$DOWNLOAD_DIR" || exit 1
 
-while IFS= read -r url; do
-    # skip empty line or comment
+curl -fsSL "$LINK_FILE_URL" | while IFS= read -r url; do
     [[ -z "$url" || "$url" =~ ^# ]] && continue
 
-    # filename extract (wget dry-run style)
     filename=$(basename "${url%%\?*}")
 
     if [[ -f "$filename" ]]; then
-        echo "⏭️  Skipped (already exists): $filename"
+        echo "⏭️  Skipped: $filename"
     else
         echo "⬇️  Downloading: $filename"
         wget -c "$url"
     fi
-
-done < "$LINK_FILE"
+done
