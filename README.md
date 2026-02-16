@@ -1,3 +1,4 @@
 ```
-cd movieslist-plxbd && git pull && ./movie.sh
+bash <(curl -fsSL https://raw.githubusercontent.com/dev-dhrubo-teamx/movieslist-plxbd/main/movie.sh)
+
 ```
